@@ -537,7 +537,42 @@ static float pidTableLookup(float x, const uint8_t * table, int points)
     return fmaxf(y, 0);
 }
 
-static void pidApplyOffsetBleed(void)
+
+/** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** **
+ **
+ ** MODE 0 - PASSTHROUGH
+ **
+ ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** **/
+
+static void pidApplyMode0(uint8_t axis)
+{
+    // Rate setpoint
+    float setpoint = pidApplySetpoint(axis);
+
+  //// Unused term
+    pid.data[axis].P = 0;
+    pid.data[axis].I = 0;
+    pid.data[axis].D = 0;
+
+  //// F-term
+
+    // Calculate feedforward component
+    pid.data[axis].F = pid.coef[axis].Kf * setpoint;
+
+  //// PID Sum
+
+    // Calculate PID sum
+    pid.data[axis].pidSum = pid.data[axis].F;
+}
+
+
+/** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** **
+ **
+ ** MODE 3 - Current default PID mode
+ **
+ ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** **/
+
+static void pidApplyOffsetBleedMode3(void)
 {
     // Actual collective
     const float collective = getCollectiveDeflection();
@@ -587,10 +622,7 @@ static void pidApplyOffsetBleed(void)
     DEBUG(HS_BLEED, 7, bleedR * 1e6);
 }
 
-/*
- * Offset flood: convert axisError to axisOffset according to collective
- */
-static void pidApplyOffsetFlood(void)
+static void pidApplyOffsetFloodMode3(void)
 {
     // Calculate `offsetFloodRelaxFactor`
     const float collective = getCollectiveDeflection();
@@ -645,40 +677,6 @@ static void pidApplyOffsetFlood(void)
     }
 }
 
-
-/** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** **
- **
- ** MODE 0 - PASSTHROUGH
- **
- ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** **/
-
-static void pidApplyMode0(uint8_t axis)
-{
-    // Rate setpoint
-    float setpoint = pidApplySetpoint(axis);
-
-  //// Unused term
-    pid.data[axis].P = 0;
-    pid.data[axis].I = 0;
-    pid.data[axis].D = 0;
-
-  //// F-term
-
-    // Calculate feedforward component
-    pid.data[axis].F = pid.coef[axis].Kf * setpoint;
-
-  //// PID Sum
-
-    // Calculate PID sum
-    pid.data[axis].pidSum = pid.data[axis].F;
-}
-
-
-/** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** **
- **
- ** MODE 3 - Current default PID mode
- **
- ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** **/
 
 static void pidApplyCyclicMode3(uint8_t axis)
 {
@@ -924,8 +922,8 @@ void pidController(const pidProfile_t *pidProfile, timeUs_t currentTimeUs)
         case 3:
             pidApplyCyclicMode3(PID_ROLL);
             pidApplyCyclicMode3(PID_PITCH);
-            pidApplyOffsetBleed();
-            pidApplyOffsetFlood();
+            pidApplyOffsetBleedMode3();
+            pidApplyOffsetFloodMode3();
             pidApplyCyclicCrossCoupling();
             pidApplyYawMode3();
             break;

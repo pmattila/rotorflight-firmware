@@ -140,6 +140,11 @@ void gyroSetSampleRate(gyroDev_t *gyro)
             gyroSampleRateHz = 1000;
             accSampleRateHz = 1000;
             gyroDivider = 8;
+#elif defined(STM32F4) || defined(STM32F7)
+            gyroRateKHz = GYRO_RATE_8_kHz;
+            gyroSampleRateHz = 4000;
+            accSampleRateHz = 1000;
+            gyroDivider = 2;
 #elif defined(STM32G4)
             gyroRateKHz = GYRO_RATE_8_kHz;
             gyroSampleRateHz = 2000;

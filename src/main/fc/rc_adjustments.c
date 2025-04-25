@@ -195,6 +195,8 @@ static const adjustmentConfig_t adjustmentConfigs[ADJUSTMENT_FUNCTION_COUNT] =
     ADJ_CONFIG(YAW_DYN_DEADBAND_FILTER, RATE,  0, 250),
 
     ADJ_CONFIG(YAW_PRECOMP_CUTOFF,      PROF,  0, 250),
+
+    ADJ_CONFIG(DRAG_MODE,               PROF,  0, 5),
 };
 
 
@@ -434,6 +436,9 @@ static int getAdjustmentValue(adjustmentFunc_e adjFunc)
         case ADJUSTMENT_YAW_PRECOMP_CUTOFF:
             value = currentPidProfile->yaw_precomp_cutoff;
             break;
+        case ADJUSTMENT_DRAG_MODE:
+            value = currentPidProfile->drag_mode;
+            break;
         case ADJUSTMENT_FUNCTION_COUNT:
             break;
     }
@@ -672,6 +677,9 @@ static void setAdjustmentValue(adjustmentFunc_e adjFunc, int value)
             break;
         case ADJUSTMENT_YAW_PRECOMP_CUTOFF:
             currentPidProfile->yaw_precomp_cutoff = value;
+            break;
+        case ADJUSTMENT_DRAG_MODE:
+            currentPidProfile->drag_mode = value;
             break;
         case ADJUSTMENT_FUNCTION_COUNT:
             break;

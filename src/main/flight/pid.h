@@ -103,6 +103,8 @@ typedef struct pid_s {
     uint8_t itermRelaxType;
     uint8_t itermRelaxLevel[PID_AXIS_COUNT];
 
+    uint8_t dragEqMode;
+
     float errorDecayRateGround;
     float errorDecayRateCyclic;
     float errorDecayLimitCyclic;

@@ -50,6 +50,7 @@ void resetPidProfile(pidProfile_t *pidProfile)
             [PID_YAW]   = { .P = 80, .I = 120, .D = 40, .F =   0, .B = 0, .O =  0, },
         },
         .pid_mode = 3,
+        .drag_mode = 3,
         .error_decay_time_ground = 25,
         .error_decay_time_cyclic = 250,
         .error_decay_time_yaw = 0,

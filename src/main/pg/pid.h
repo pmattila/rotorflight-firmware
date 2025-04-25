@@ -127,6 +127,7 @@ typedef struct pidProfile_s {
     pidf_t              pid[PID_ITEM_COUNT];
 
     uint8_t             pid_mode;
+    uint8_t             drag_mode;
 
     uint8_t             error_decay_time_ground;
     uint8_t             error_decay_time_cyclic;

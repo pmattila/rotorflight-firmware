@@ -145,6 +145,9 @@ typedef enum {
     // Precomp cutoff
     ADJUSTMENT_YAW_PRECOMP_CUTOFF       = 75,
 
+    // Drag mode equation
+    ADJUSTMENT_DRAG_MODE                = 76,
+
     ADJUSTMENT_FUNCTION_COUNT
 } adjustmentFunc_e;
 

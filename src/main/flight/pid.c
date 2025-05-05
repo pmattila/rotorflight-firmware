@@ -191,6 +191,7 @@ void INIT_CODE pidLoadProfile(const pidProfile_t *pidProfile)
     if (pidProfile->pid_mode == 4) {
       pid.coef[PID_PITCH].Kb *= 10;
       pid.coef[PID_ROLL].Kd /= 5;
+      pid.coef[PID_ROLL].Kb /= 5;
     }
 
     // Bleed conversion for pitch

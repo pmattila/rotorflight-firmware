@@ -43,6 +43,8 @@ typedef struct adcConfig_s {
     adcChannelConfig_t vbec;
     adcChannelConfig_t vbus;
     adcChannelConfig_t vext;
+    adcChannelConfig_t ibec;
+    adcChannelConfig_t ibus;
 
     uint16_t vrefIntCalibration;
     uint16_t tempSensorCalibration1;

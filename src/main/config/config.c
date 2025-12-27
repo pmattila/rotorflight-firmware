@@ -350,6 +350,9 @@ static void validateAndFixConfig(void)
     adcConfigMutable()->vbus.enabled = true;
     adcConfigMutable()->vext.enabled = true;
 
+    adcConfigMutable()->ibec.enabled = true;
+    adcConfigMutable()->ibus.enabled = true;
+
     adcConfigMutable()->rssi.enabled = featureIsEnabled(FEATURE_RSSI_ADC);
 
 #ifdef USE_RX_SPI

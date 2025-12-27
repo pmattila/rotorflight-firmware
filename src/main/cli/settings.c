@@ -898,9 +898,17 @@ const clivalue_t valueTable[] = {
     { "vext_cutoff",                VAR_UINT8  | HARDWARE_VALUE, .config.minmaxUnsigned = { 0, 250 }, PG_VOLTAGE_SENSOR_ADC_CONFIG, PG_ARRAY_ELEMENT_OFFSET(voltageSensorADCConfig_t, VOLTAGE_SENSOR_ADC_EXT, cutoff) },
 
 // PG_CURRENT_SENSOR_ADC_CONFIG
-    { "ibata_scale",                VAR_INT16  | HARDWARE_VALUE, .config.minmax = { -16000, 16000 }, PG_CURRENT_SENSOR_ADC_CONFIG, PG_ARRAY_ELEMENT_OFFSET(currentSensorADCConfig_t, CURRENT_SENSOR_ADC_BAT, scale) },
+    { "ibata_scale",                VAR_INT16  | HARDWARE_VALUE, .config.minmax = { -32000, 32000 }, PG_CURRENT_SENSOR_ADC_CONFIG, PG_ARRAY_ELEMENT_OFFSET(currentSensorADCConfig_t, CURRENT_SENSOR_ADC_BAT, scale) },
     { "ibata_offset",               VAR_INT16  | HARDWARE_VALUE, .config.minmax = { -32000, 32000 }, PG_CURRENT_SENSOR_ADC_CONFIG, PG_ARRAY_ELEMENT_OFFSET(currentSensorADCConfig_t, CURRENT_SENSOR_ADC_BAT, offset) },
     { "ibata_cutoff",               VAR_UINT8  | HARDWARE_VALUE, .config.minmaxUnsigned = { 0, 250 }, PG_CURRENT_SENSOR_ADC_CONFIG, PG_ARRAY_ELEMENT_OFFSET(currentSensorADCConfig_t, CURRENT_SENSOR_ADC_BAT, cutoff) },
+
+    { "ibec_scale",                 VAR_INT16  | HARDWARE_VALUE, .config.minmax = { -32000, 32000 }, PG_CURRENT_SENSOR_ADC_CONFIG, PG_ARRAY_ELEMENT_OFFSET(currentSensorADCConfig_t, CURRENT_SENSOR_ADC_BEC, scale) },
+    { "ibec_offset",                VAR_INT16  | HARDWARE_VALUE, .config.minmax = { -32000, 32000 }, PG_CURRENT_SENSOR_ADC_CONFIG, PG_ARRAY_ELEMENT_OFFSET(currentSensorADCConfig_t, CURRENT_SENSOR_ADC_BEC, offset) },
+    { "ibec_cutoff",                VAR_UINT8  | HARDWARE_VALUE, .config.minmaxUnsigned = { 0, 250 }, PG_CURRENT_SENSOR_ADC_CONFIG, PG_ARRAY_ELEMENT_OFFSET(currentSensorADCConfig_t, CURRENT_SENSOR_ADC_BEC, cutoff) },
+
+    { "ibus_scale",                 VAR_INT16  | HARDWARE_VALUE, .config.minmax = { -32000, 32000 }, PG_CURRENT_SENSOR_ADC_CONFIG, PG_ARRAY_ELEMENT_OFFSET(currentSensorADCConfig_t, CURRENT_SENSOR_ADC_BUS, scale) },
+    { "ibus_offset",                VAR_INT16  | HARDWARE_VALUE, .config.minmax = { -32000, 32000 }, PG_CURRENT_SENSOR_ADC_CONFIG, PG_ARRAY_ELEMENT_OFFSET(currentSensorADCConfig_t, CURRENT_SENSOR_ADC_BUS, offset) },
+    { "ibus_cutoff",                VAR_UINT8  | HARDWARE_VALUE, .config.minmaxUnsigned = { 0, 250 }, PG_CURRENT_SENSOR_ADC_CONFIG, PG_ARRAY_ELEMENT_OFFSET(currentSensorADCConfig_t, CURRENT_SENSOR_ADC_BUS, cutoff) },
 // PG_CURRENT_SENSOR_ADC_CONFIG
 
 #ifdef USE_BEEPER

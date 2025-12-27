@@ -233,6 +233,12 @@ void adcInit(const adcConfig_t *config)
     if (config->vext.enabled) {
         adcOperatingConfig[ADC_VEXT].tag = config->vext.ioTag;
     }
+    if (config->ibec.enabled) {
+        adcOperatingConfig[ADC_IBEC].tag = config->ibec.ioTag;
+    }
+    if (config->ibus.enabled) {
+        adcOperatingConfig[ADC_IBUS].tag = config->ibus.ioTag;
+    }
 
     ADCDevice device = ADC_CFG_TO_DEV(config->device);
 

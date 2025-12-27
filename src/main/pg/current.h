@@ -31,6 +31,8 @@ typedef enum {
 
 typedef enum {
     CURRENT_SENSOR_ADC_BAT = 0,
+    CURRENT_SENSOR_ADC_BEC = 1,
+    CURRENT_SENSOR_ADC_BUS = 2,
     MAX_CURRENT_SENSOR_ADC
 } currentSensorADC_e;
 

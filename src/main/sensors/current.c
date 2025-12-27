@@ -63,6 +63,8 @@ static currentSensorState_t currentADCSensors[MAX_CURRENT_SENSOR_ADC];
 // Current sensor ID to ADC Channel map
 static const uint8_t currentSensorAdcChannelMap[MAX_CURRENT_SENSOR_ADC] = {
     [CURRENT_SENSOR_ADC_BAT] = ADC_CURRENT,
+    [CURRENT_SENSOR_ADC_BEC] = ADC_IBEC,
+    [CURRENT_SENSOR_ADC_BUS] = ADC_IBUS,
 };
 
 static float currentSensorADCToCurrent(int sensor, const uint16_t src)
@@ -217,6 +219,8 @@ void currentSensorESCInit(void)
 
 const uint8_t currentMeterIds[] = {
     CURRENT_METER_ID_BATTERY,
+    CURRENT_METER_ID_BEC,
+    CURRENT_METER_ID_BUS,
 #ifdef USE_ESC_SENSOR
     CURRENT_METER_ID_ESC_COMBINED,
     CURRENT_METER_ID_ESC_1,
@@ -237,6 +241,10 @@ bool currentMeterRead(currentMeterId_e id, currentMeter_t *meter)
     switch (id) {
         case CURRENT_METER_ID_BATTERY:
             return currentSensorADCRead(CURRENT_SENSOR_ADC_BAT, meter);
+        case CURRENT_METER_ID_BEC:
+            return currentSensorADCRead(CURRENT_SENSOR_ADC_BEC, meter);
+        case CURRENT_METER_ID_BUS:
+            return currentSensorADCRead(CURRENT_SENSOR_ADC_BUS, meter);
 #ifdef USE_ESC_SENSOR
         case CURRENT_METER_ID_ESC_COMBINED:
             return currentSensorESCReadTotal(meter);

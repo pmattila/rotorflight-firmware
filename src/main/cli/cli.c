@@ -5117,6 +5117,8 @@ const cliResourceValue_t resourceTable[] = {
     DEFS( OWNER_ADC_BEC,       PG_ADC_CONFIG, adcConfig_t, vbec.ioTag ),
     DEFS( OWNER_ADC_BUS,       PG_ADC_CONFIG, adcConfig_t, vbus.ioTag ),
     DEFS( OWNER_ADC_EXT,       PG_ADC_CONFIG, adcConfig_t, vext.ioTag ),
+    DEFS( OWNER_ADC_IBEC,      PG_ADC_CONFIG, adcConfig_t, ibec.ioTag ),
+    DEFS( OWNER_ADC_IBUS,      PG_ADC_CONFIG, adcConfig_t, ibus.ioTag ),
 #endif
 #ifdef USE_BARO
     DEFS( OWNER_BARO_CS,       PG_BAROMETER_CONFIG, barometerConfig_t, baro_spi_csn ),

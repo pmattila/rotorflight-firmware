@@ -308,6 +308,14 @@ void adcInit(const adcConfig_t *config)
         adcOperatingConfig[ADC_VEXT].tag = config->vext.ioTag;
         adcOperatingConfig[ADC_VEXT].adcDevice = config->vext.device;
     }
+    if (config->ibec.enabled) {
+        adcOperatingConfig[ADC_IBEC].tag = config->ibec.ioTag;
+        adcOperatingConfig[ADC_IBEC].adcDevice = config->ibec.device;
+    }
+    if (config->ibus.enabled) {
+        adcOperatingConfig[ADC_IBUS].tag = config->ibus.ioTag;
+        adcOperatingConfig[ADC_IBUS].adcDevice = config->ibus.device;
+    }
 
 #ifdef USE_ADC_INTERNAL
     adcInitCalibrationValues();

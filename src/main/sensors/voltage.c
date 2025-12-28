@@ -130,7 +130,7 @@ void voltageSensorADCInit(void)
     for (unsigned i = 0; i < MAX_VOLTAGE_SENSOR_ADC; i++) {
         voltageADCSensors[i].enabled = adcIsEnabled(voltageSensorAdcChannelMap[i]);
 
-        lowpassFilterInit(&voltageADCSensors[i].filter, LPF_BESSEL,
+        lowpassFilterInit(&voltageADCSensors[i].filter, LPF_PT2,
             voltageSensorADCConfig(i)->cutoff,
             batteryConfig()->vbatUpdateHz, 0);
     }
@@ -203,7 +203,7 @@ void voltageSensorESCInit(void)
 {
 #ifdef USE_ESC_SENSOR
     memset(&voltageESCSensor, 0, sizeof(voltageESCSensor));
-    lowpassFilterInit(&voltageESCSensor.filter, LPF_BESSEL,
+    lowpassFilterInit(&voltageESCSensor.filter, LPF_PT2,
         escSensorConfig()->filter_cutoff,
         batteryConfig()->vbatUpdateHz, 0);
 #endif

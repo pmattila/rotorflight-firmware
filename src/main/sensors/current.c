@@ -203,7 +203,7 @@ void currentSensorESCInit(void)
 {
     memset(&currentESCSensor, 0, sizeof(currentESCSensor));
 
-    lowpassFilterInit(&currentESCSensor.filter, LPF_BESSEL,
+    lowpassFilterInit(&currentESCSensor.filter, LPF_PT2,
         escSensorConfig()->filter_cutoff,
         batteryConfig()->ibatUpdateHz, 0);
 }

@@ -798,7 +798,7 @@ static void osdElementCurrentDraw(osdElementParms_t *element)
 
 static void osdElementDebug(osdElementParms_t *element)
 {
-    tfp_sprintf(element->buff, "DBG %5d %5d %5d %5d", debug[0], debug[1], debug[2], debug[3]);
+    tfp_sprintf(element->buff, "DBG %5ld %5ld %5ld %5ld", debug[0], debug[1], debug[2], debug[3]);
 }
 
 static void osdElementDisarmed(osdElementParms_t *element)
@@ -829,7 +829,7 @@ static void osdBackgroundDisplayName(osdElementParms_t *element)
 static void osdElementTotalFlights(osdElementParms_t *element)
 {
     const int32_t total_flights = statsConfig()->stats_total_flights;
-    tfp_sprintf(element->buff, "#%d", total_flights);
+    tfp_sprintf(element->buff, "#%ld", total_flights);
 }
 #endif
 
@@ -1011,7 +1011,7 @@ static void osdElementGpsSats(osdElementParms_t *element)
 static void osdElementGpsSpeed(osdElementParms_t *element)
 {
     if (STATE(GPS_FIX)) {
-        tfp_sprintf(element->buff, "%c%3d%c", SYM_SPEED, osdGetSpeedToSelectedUnit(gpsConfig()->gps_use_3d_speed ? gpsSol.speed3d : gpsSol.groundSpeed), osdGetSpeedToSelectedUnitSymbol());
+        tfp_sprintf(element->buff, "%c%3ld%c", SYM_SPEED, osdGetSpeedToSelectedUnit(gpsConfig()->gps_use_3d_speed ? gpsSol.speed3d : gpsSol.groundSpeed), osdGetSpeedToSelectedUnitSymbol());
     } else {
         tfp_sprintf(element->buff, "%c%c%c", SYM_SPEED, SYM_HYPHEN, osdGetSpeedToSelectedUnitSymbol());
     }
@@ -1096,7 +1096,7 @@ static void osdElementLogStatus(osdElementParms_t *element)
         } else {
             int32_t logNumber = blackboxGetLogNumber();
             if (logNumber >= 0) {
-                tfp_sprintf(element->buff, "%c%d", SYM_BBLOG, logNumber);
+                tfp_sprintf(element->buff, "%c%ld", SYM_BBLOG, logNumber);
             } else {
                 tfp_sprintf(element->buff, "%c", SYM_BBLOG);
             }
@@ -1107,7 +1107,7 @@ static void osdElementLogStatus(osdElementParms_t *element)
 
 static void osdElementMahDrawn(osdElementParms_t *element)
 {
-    tfp_sprintf(element->buff, "%4d%c", getBatteryCapacityUsed(), SYM_MAH);
+    tfp_sprintf(element->buff, "%4ld%c", getBatteryCapacityUsed(), SYM_MAH);
 }
 
 static void osdElementMainBatteryUsage(osdElementParms_t *element)

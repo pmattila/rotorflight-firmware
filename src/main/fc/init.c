@@ -1003,4 +1003,6 @@ void init(void)
     tasksInit();
 
     systemState |= SYSTEM_STATE_READY;
+
+    printf("System started\n");
 }

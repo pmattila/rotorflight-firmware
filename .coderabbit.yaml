@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: "en-US"
+early_access: false
+reviews:
+  profile: "chill"
+  instructions: "Do not check docstring coverage"
+  high_level_summary: true
+  changed_files_summary: false
+  request_changes_workflow: false
+  review_status: true
+  review_details: false
+  fail_commit_status: true
+  collapse_walkthrough: false
+  auto_review:
+    enabled: true
+    drafts: false
+  in_progress_fortune: false
+  poem: false

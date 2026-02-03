@@ -1,0 +1,69 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "STM32F7X2 Debug",
+      "type": "cortex-debug",
+      "cwd": "${workspaceFolder}",
+      "executable": "${workspaceFolder}/obj/main/rotorflight_STM32F7X2.elf",
+      "request": "attach",
+      "device": "STM32F722RE",
+      "servertype": "openocd",
+      "configFiles": [
+        "board/st_nucleo_f7.cfg"
+      ],
+      "svdFile": "${workspaceFolder}/lib/main/STM32_SVD/stm32f722.svd",
+      "showDevDebugOutput": "none",
+      "preLaunchCommands": [
+        "source ${workspaceFolder}/lib/main/debug/gdb-swo.init"
+      ],
+      "swoConfig": {
+        "enabled": true,
+        "source": "probe",
+        "swoFrequency": 2000000,
+        "cpuFrequency": 216000000,
+        "decoders": [
+          {
+            "port": 0,
+            "type": "console",
+            "label": "Debug",
+            "encoding": "ascii"
+          }
+        ]
+      },
+    },
+    {
+      "name": "STM32F7X2 Build+Debug",
+      "type": "cortex-debug",
+      "cwd": "${workspaceFolder}",
+      "executable": "${workspaceFolder}/obj/main/rotorflight_STM32F7X2.elf",
+      "request": "launch",
+      "device": "STM32F722RE",
+      "servertype": "openocd",
+      "configFiles": [
+        "board/st_nucleo_f7.cfg"
+      ],
+      "svdFile": "${workspaceFolder}/lib/main/STM32_SVD/stm32f722.svd",
+      "runToEntryPoint": "main",
+      "showDevDebugOutput": "none",
+      "preLaunchTask": "Debug Build STM32F7X2",
+      "preLaunchCommands": [
+        "source ${workspaceFolder}/lib/main/debug/gdb-swo.init"
+      ],
+      "swoConfig": {
+        "enabled": true,
+        "source": "probe",
+        "swoFrequency": 2000000,
+        "cpuFrequency": 216000000,
+        "decoders": [
+          {
+            "port": 0,
+            "type": "console",
+            "label": "Debug",
+            "encoding": "ascii"
+          }
+        ]
+      },
+    }
+  ]
+}

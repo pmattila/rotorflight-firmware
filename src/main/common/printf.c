@@ -188,7 +188,6 @@ int tfp_sprintf(char *s, const char *fmt, ...)
 
 static void serial_putc(void *p, char c)
 {
-    UNUSED(p);
     serialWrite((serialPort_t *)p, c);
 }
 
@@ -206,7 +205,7 @@ static void itm_putc(void *p, char c)
 
 void printfITMInit(void)
 {
-    stdout_putp = NULL;
+    stdout_putp = ITM;
     stdout_putf = itm_putc;
 }
 
@@ -214,7 +213,7 @@ int tfp_printf(const char *fmt, ...)
 {
     int written = 0;
 
-    if (stdout_putf) {
+    if (stdout_putf && stdout_putp) {
         va_list va;
         va_start(va, fmt);
         written = tfp_format(stdout_putp, stdout_putf, fmt, va);

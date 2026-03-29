@@ -43,7 +43,6 @@
 #include "build/build_config.h"
 #include "rx/frsky_crc.h"
 #include "io/serial.h"
-
 #define FBUS_MASTER_BUFFER_SIZE 64
 
 static inline uint8_t fbusGetBit(uint8_t value, uint8_t bit)

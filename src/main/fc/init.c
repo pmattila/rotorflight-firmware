@@ -37,6 +37,7 @@
 #include "common/axis.h"
 #include "common/color.h"
 #include "common/maths.h"
+#include "common/bench.h"
 #include "common/printf.h"
 
 #include "config/config.h"
@@ -270,6 +271,10 @@ void init(void)
 #endif
 
     systemInit();
+
+#ifdef USE_MATH_BENCH
+    mathBenchRun();
+#endif
 
     // Initialize task data as soon as possible. Has to be done before tasksInit(),
     // and any init code that may try to modify task behaviour before tasksInit().

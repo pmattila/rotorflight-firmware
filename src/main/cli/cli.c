@@ -47,6 +47,7 @@ bool cliMode = false;
 #include "common/axis.h"
 #include "common/color.h"
 #include "common/maths.h"
+#include "common/bench.h"
 #include "common/printf.h"
 #include "common/strtol.h"
 #include "common/time.h"
@@ -6666,6 +6667,94 @@ static void cliMsc(const char *cmdName, char *cmdline)
 }
 #endif
 
+#ifdef USE_MATH_BENCH
+enum {
+    MATH_BENCH_FUNCTION_WIDTH = 16,
+    MATH_BENCH_CYCLES_WIDTH = 8,
+    MATH_BENCH_BITS_WIDTH = 6,
+    MATH_BENCH_ERROR_WIDTH = 14,
+};
+
+static void cliMathBenchPrintSpaces(int count)
+{
+    for (int i = 0; i < count; i++) {
+        cliWrite(' ');
+    }
+}
+
+static void cliMathBenchPrintStringColumn(const char *str, int width, bool alignRight)
+{
+    int length = strlen(str);
+    int printed = length;
+
+    if (printed > width) {
+        printed = width;
+    }
+
+    if (alignRight) {
+        cliMathBenchPrintSpaces(width - printed);
+    }
+
+    for (int i = 0; i < printed; i++) {
+        cliWrite((uint8_t)str[i]);
+    }
+
+    if (!alignRight) {
+        cliMathBenchPrintSpaces(width - printed);
+    }
+}
+
+static void cliMathBenchPrintUnsignedColumn(uint32_t value, int width)
+{
+    char buffer[12];
+    const int length = tfp_sprintf(buffer, "%u", (unsigned)value);
+
+    if (width > length) {
+        cliMathBenchPrintSpaces(width - length);
+    }
+
+    cliPrint(buffer);
+}
+
+static void cliMathBench(const char *cmdName, char *cmdline)
+{
+    UNUSED(cmdName);
+    UNUSED(cmdline);
+
+    cliPrintLinefeed();
+
+    cliMathBenchPrintStringColumn("Function", MATH_BENCH_FUNCTION_WIDTH, false);
+    cliPrint(" ");
+    cliMathBenchPrintStringColumn("Cycles", MATH_BENCH_CYCLES_WIDTH, true);
+    cliPrint(" ");
+    cliMathBenchPrintStringColumn("Bits", MATH_BENCH_BITS_WIDTH, true);
+    cliPrint(" ");
+    cliMathBenchPrintStringColumn("RelErr*1E9", MATH_BENCH_ERROR_WIDTH, true);
+    cliPrintLinefeed();
+    cliPrintLinefeed();
+
+    for (int i = 0; i < mathBenchEntryCount; i++) {
+        const mathBenchEntry_t *e = &mathBenchEntries[i];
+        if (!e->name) {
+            cliPrintLinefeed();
+        } else {
+            cliMathBenchPrintStringColumn(e->name, MATH_BENCH_FUNCTION_WIDTH, false);
+            cliPrint(" ");
+            cliMathBenchPrintUnsignedColumn(e->cycles, MATH_BENCH_CYCLES_WIDTH);
+            cliPrint(" ");
+            if (e->ref) {
+                cliMathBenchPrintUnsignedColumn(e->bits, MATH_BENCH_BITS_WIDTH);
+                cliPrint(" ");
+                cliMathBenchPrintUnsignedColumn(e->error, MATH_BENCH_ERROR_WIDTH);
+            } else {
+                cliMathBenchPrintSpaces(MATH_BENCH_BITS_WIDTH + 1 + MATH_BENCH_ERROR_WIDTH);
+            }
+            cliPrintLinefeed();
+        }
+    }
+}
+#endif
+
 typedef void cliCommandFn(const char* name, char *cmdline);
 
 typedef struct {
@@ -6790,6 +6879,9 @@ const clicmd_t cmdTable[] = {
     CLI_COMMAND_DEF("manufacturer_id", "get / set the id of the board manufacturer", "[manufacturer id]", cliManufacturerId),
 #endif
     CLI_COMMAND_DEF("map", "configure rc channel order", "[<map>]", cliMap),
+#ifdef USE_MATH_BENCH
+    CLI_COMMAND_DEF("mathbench", "benchmark math approximation functions", NULL, cliMathBench),
+#endif
     CLI_COMMAND_DEF("mcu_id", "id of the microcontroller", NULL, cliMcuId),
     CLI_COMMAND_DEF("mixer", "configure mixer",
                     "status\r\n\t"
@@ -7115,6 +7207,10 @@ void cliEnter(serialPort_t *serialPort)
     cliPrintLine("\r\nCLI");
 #endif
     setArmingDisabled(ARMING_DISABLED_CLI);
+
+#ifdef USE_MATH_BENCH
+    cliMathBench(NULL, NULL);
+#endif
 
     cliPrompt();
 

@@ -122,6 +122,8 @@
 
 #define USE_CMS
 
+#define USE_MATH_BENCH
+
 #undef USE_CRSF_V3
 
 #undef USE_OSD
